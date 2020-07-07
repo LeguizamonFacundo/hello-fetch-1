@@ -6,6 +6,18 @@ Cómo usar `fetch()` para consumir una API.
 
 Vamos a armar una interfaz de usuario bien inútil pero que demuestre como usar `fetch()` para consumir la API de la guía anterior. Vamos a tener una tabla con los datos de la colección `users` de nuestra base de datos. Y también vamos a tener un campo de texto y un botón para buscar usuarios por ID y mostrarlos en la tabla.
 
+![diagrama](img/fetch.png)
+
+Una breve explicación antes de arrancar. La aplicación completa funciona de la siguiente manera:
+
+1. El cliente realiza una petición HTTP a GitHub Pages, algo así como `GET / http://user.github.io/hello-fetch`
+2. El server de GitHub le responde al navegador con `index.html`. Linkeado al HTML viene también `script.js`.
+3. Apenas el navegador termina de cargar el documento HTML, el código en `script.js` realiza una petición HTTP a nuestro _backend_ en Heroku. Algo así como `GET /api/users http://hellodb.herokuapp.com`. Usamos `fetch()` para hacer esta petición.
+4. La API que hicimos en Express hace una _query_ a la base de datos en MongoDB Atlas.
+5. El servidor de Mongo le responde al _backend_ con una lista de documentos, o en JS, un array de objetos.
+6. El _backend_ convierte ese array a formato JSON y lo envía al navegador.
+7. El código en `script.js` convierte nuevamente el JSON a objetos de JS y manipula la interfaz de usuario para mostrar la información.
+
 ## Antes de empezar
 
 Necesitamos nuestro _backend_ ya funcionando en Heroku, el de la guía anterior. El mío está en https://hello-database.herokuapp.com/api/. El _frontend_ lo vamos a hacer con HTML y JS. Para darle un poco de onda vamos a usar Bootstrap que es un _framework_ de CSS muy famoso hecho por la gente de Twitter. El sitio va a estar hosteado directamente desde el repo de GitHub con GitHub Pages.
@@ -215,3 +227,11 @@ $ git push -u origin master
 ```
 
 Y en el repo en la pestaña de _settings_ le damos a publicar en GitHub Pages desde la rama _master_ como hicimos en [hello-gh-pages](https://github.com/santiagotrini/hello-gh-pages).
+
+## Guías, referencias y documentación
+
+Para los más curiosos les dejo algunos links.
+
+- La documentación oficial de Bootstrap en https://getbootstrap.com/docs/4.5/getting-started/introduction/ (en inglés).
+- Un artículo en MDN sobre el uso de Fetch https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch.
+- Modificando el documento en JS, sacado de una de las mejores referencias online de JS https://javascript.info/modifying-document (en inglés).
