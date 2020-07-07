@@ -9,21 +9,22 @@ document.addEventListener("DOMContentLoaded", function() {
 function fetchData() {
   fetch('https://hello-database.herokuapp.com/api/users')
     .then(res => res.json())
-    .then(json => {
-      populateTable(json);
+    .then(users => {
+      populateTable(users);
     });
 }
 
 // esta funcion carga los usuarios en la tabla
 // crea una fila en la tabla por cada elemento en el array json
-function populateTable(json) {
-  for (let user of json) {
+function populateTable(users) {
+  for (let user of users) {
     // borramos las propiedades que no queremos en la tabla
     delete user._id;
     delete user.__v;
-    // agregamos el cumpleaños para la ultima columna
+    // agregamos la edad para la ultima columna
     let now = new Date();
     user.age = now.getFullYear() - new Date(user.birthday).getFullYear();
+    // formateamos la fecha de cumpleaños
     let birthday = new Date(user.birthday);
     user.birthday = birthday.toLocaleDateString('es-AR');
     // creamos una fila
@@ -47,16 +48,16 @@ function fetchUser() {
   fetch(`https://hello-database.herokuapp.com/api/user/${id}`)
     .then(res => res.json())
     .then(user => {
-      let json = [user];  // populateTable usa un array de json como argumento
+      let users = [user];  // populateTable usa un array de json como argumento
       // si tenemos un usuario lo cargamos en la tabla
-      if (json[0] !== null) {
+      if (users[0] !== null) {
         // reemplazamos el tbody por uno nuevo con el usuario que encontramos
         let oldTBody = document.getElementById('tbody');
         let newTBody = document.createElement('tbody');
         newTBody.id = 'tbody';
         oldTBody.replaceWith(newTBody);
         // cargamos la fila
-        populateTable(json);
+        populateTable(users);
         // actualizamos la UI
         document.getElementById('table').hidden = false;
         document.getElementById('nores').innerHTML = '';
