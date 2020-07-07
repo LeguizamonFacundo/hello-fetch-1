@@ -131,7 +131,7 @@ function fetchData() {
 }
 
 // esta funcion carga los usuarios en la tabla
-// crea una fila en la tabla por cada elemento en el array json
+// crea una fila en la tabla por cada elemento en el array users
 function populateTable(users) {
   for (let user of users) {
     // borramos las propiedades que no queremos en la tabla
@@ -164,7 +164,7 @@ function fetchUser() {
   fetch(`https://hello-database.herokuapp.com/api/user/${id}`)
     .then(res => res.json())
     .then(user => {
-      let users = [user];  // populateTable usa un array de json como argumento
+      let users = [user];  // populateTable usa un array de objetos como argumento
       // si tenemos un usuario lo cargamos en la tabla
       if (users[0] !== null) {
         // reemplazamos el tbody por uno nuevo con el usuario que encontramos
